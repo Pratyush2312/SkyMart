@@ -185,7 +185,7 @@ const Register = () => {
                 {/* Sign In */}
                 <p className="text-center text-[#666] mt-8">
                     Already have an account?{" "}
-                    <button onClick={() => { navigate('/login') }} className="text-[#c6ff00] font-bold hover:underline">
+                    <button onClick={() => { navigate('/') }} className="text-[#c6ff00] font-bold hover:underline">
                         Sign in
                     </button>
                 </p>

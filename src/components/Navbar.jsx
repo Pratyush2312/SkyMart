@@ -17,7 +17,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("sm_session");
-        navigate('/login');
+        navigate('/');
     }
 
     return (
@@ -58,7 +58,7 @@ const Navbar = () => {
                     <span className="text-sm text-[#bbb]">Pratyush</span>
                 </div>
 
-                <button onClick={()=>{setIsCartOpen(prev=>!prev)}} className="rounded-xl cursor-pointer border border-[#292929] p-2.5 text-[#777] transition hover:text-white">
+                <button onClick={() => { setIsCartOpen(prev => !prev) }} className="rounded-xl cursor-pointer border border-[#292929] p-2.5 text-[#777] transition hover:text-white">
                     <ShoppingCart size={18} />
                 </button>
 
