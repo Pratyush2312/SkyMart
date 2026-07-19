@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import {
     Zap,
@@ -15,10 +15,13 @@ import Navbar from './../components/Navbar';
 import ProductShowcase from './../components/ProductShowcase';
 import CategorySection from './../components/CategorySection';
 import Footer from "../components/Footer";
+import Cart from './../components/Cart';
+import { MyStore } from './../context/MyContext';
 
 const Home = () => {
     const [topRated, setTopRated] = useState([]);
     const [arrivals, setArrivals] = useState([]);
+    const { isCartOpen, setIsCartOpen } = useContext(MyStore);
     const categories = [
         {
             name: "Electronics",
@@ -56,7 +59,7 @@ const Home = () => {
         <div className="min-h-screen bg-[#090a09] text-white">
             {/* Navbar */}
             <Navbar/>
-
+            {isCartOpen && <Cart />}
             <main className="mx-auto flex flex-col gap-10 max-w-[1280px] px-6 pb-24">
                 {/* Hero */}
                 <section className="relative  overflow-hidden rounded-[24px] border border-[#888] px-12 py-14">

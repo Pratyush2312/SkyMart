@@ -1,16 +1,24 @@
 import React from 'react'
 import { NavLink } from 'react-router'
 import { useNavigate } from 'react-router'
+import { useContext } from 'react';
 import {
     Zap,
     ShoppingCart,
     LogOut
 } from 'lucide-react'
+import { MyStore } from '../context/MyContext';
 
 
 const Navbar = () => {
 
     const navigate = useNavigate();
+    const { setIsCartOpen } = useContext(MyStore);
+
+    const handleLogout = () => {
+        localStorage.removeItem("sm_session");
+        navigate('/login');
+    }
 
     return (
         <nav className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-5">
@@ -50,11 +58,11 @@ const Navbar = () => {
                     <span className="text-sm text-[#bbb]">Pratyush</span>
                 </div>
 
-                <button className="rounded-xl cursor-pointer border border-[#292929] p-2.5 text-[#777] transition hover:text-white">
+                <button onClick={()=>{setIsCartOpen(prev=>!prev)}} className="rounded-xl cursor-pointer border border-[#292929] p-2.5 text-[#777] transition hover:text-white">
                     <ShoppingCart size={18} />
                 </button>
 
-                <button onClick={() => { navigate('/login') }} className="rounded-xl cursor-pointer border border-[#292929] p-2.5 text-[#777] transition hover:text-red-500 hover:bg-[#3A1517] hover:border-[#7A2428]">
+                <button onClick={() => handleLogout()} className="rounded-xl cursor-pointer border border-[#292929] p-2.5 text-[#777] transition hover:text-red-500 hover:bg-[#3A1517] hover:border-[#7A2428]">
                     <LogOut size={18} />
                 </button>
             </div>

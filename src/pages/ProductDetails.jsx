@@ -9,7 +9,7 @@ import {
     RotateCcw,
 } from "lucide-react";
 import { RelatedProductCard } from "../components/RelatedProductCard";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { useContext, useEffect, useState } from "react";
 import { MyStore } from './../context/MyContext';
 import axios from "axios";
@@ -31,7 +31,8 @@ const ProductDetails = () => {
     useEffect(() => {
         fetchProductDetails(id);
     },[])
-    
+
+    const navigate = useNavigate();
 
     return (
         <main className="min-h-screen bg-[#090a09] text-white">
@@ -39,9 +40,9 @@ const ProductDetails = () => {
 
                 {/* Breadcrumb */}
                 <div className="mb-10 flex items-center gap-3 text-sm text-[#666]">
-                    <ArrowLeft size={15} />
+                    <ArrowLeft size={15} onClick={() => navigate('/products')} className="cursor-pointer hover:text-white"/>
 
-                    <span>Products</span>
+                    <span onClick={()=> navigate('/products')} className="cursor-pointer hover:text-white">Products</span>
                     <span>/</span>
 
                     <span className="capitalize">

@@ -1,6 +1,10 @@
 import { Star, Zap, ShoppingBag, ArrowRight } from "lucide-react";
-
+import { useNavigate } from "react-router";
+import { MyStore } from './../context/MyContext';
+import { useContext } from "react";
 const ProductShowcase = ({ topRated = [], newArrivals = [] }) => {
+
+    
     return (
         <section className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* Top Rated */}
@@ -31,19 +35,21 @@ const ProductShowcase = ({ topRated = [], newArrivals = [] }) => {
 };
 
 const ProductPanel = ({ title, icon, products }) => {
+    const navigate = useNavigate();
+    const { addToCart } = useContext(MyStore);
     return (
-        <div className="rounded-[28px] bg-[#fafafa] p-7 text-black">
+        <div className="rounded-[28px] bg-[#1c1c1c] p-7 text-black">
             {/* Header */}
             <div className="mb-7 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     {icon}
 
-                    <h2 className="text-[22px] font-bold">
+                    <h2 className="text-[22px] font-bold text-white">
                         {title}
                     </h2>
                 </div>
 
-                <button className="flex items-center gap-1 text-sm font-medium text-[#aee500] transition hover:text-[#8fbd00]">
+                <button onClick={()=>{navigate('/products')}} className="flex items-center gap-1 text-sm font-medium text-[#aee500] transition hover:text-[#8fbd00]">
                     See all
                     <ArrowRight size={15} />
                 </button>
@@ -58,7 +64,7 @@ const ProductPanel = ({ title, icon, products }) => {
                     >
                         {/* Product */}
                         <div className="flex items-center gap-6">
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center">
+                            <div onClick={()=>{navigate(`/products/${product.id}`)}} className="flex h-12 w-12 shrink-0 items-center justify-center">
                                 <img
                                     src={product.image}
                                     alt={product.title}
@@ -72,7 +78,8 @@ const ProductPanel = ({ title, icon, products }) => {
                         </div>
 
                         {/* Add To Cart */}
-                        <button className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f4ffda] text-[#b9f000] transition hover:bg-[#eaffb7]">
+                        <button onClick={() => addToCart(product)}
+                            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f4ffda] text-[#b9f000] transition hover:bg-[#eaffb7]">
                             <ShoppingBag size={18} />
                         </button>
                     </div>
