@@ -4,16 +4,17 @@ import { useContext, useEffect } from "react";
 import { MyStore } from "../context/MyContext";
 import ProductCard from "../components/ProductCard";
 import Footer from './../components/Footer';
-
+import Cart from "../components/Cart";
 const Products = () => {
 
-    const { products, setProducts, fetchProducts } = useContext(MyStore);
+    const { products, setProducts, fetchProducts, isCartOpen } = useContext(MyStore);
 
    
 
     return (
         <main className="min-h-screen bg-[#090a09] text-white">
             <Navbar />
+            {isCartOpen && <Cart />}
             <div className="mx-auto flex flex-col gap-10 w-full max-w-[1280px] mt-10 mb-15">
 
                 {/* Page Heading */}
@@ -82,7 +83,6 @@ const Products = () => {
                     </div>
                 </section>
 
-                {/* Product Grid Goes Here */}
                 <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {products.map(product => {
                         return <ProductCard key={product.id} product={product} />

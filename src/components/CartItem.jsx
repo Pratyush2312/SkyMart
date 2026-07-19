@@ -7,11 +7,16 @@ const CartItem = ({ item }) => {
 
     const { cart, setCart } = useContext(MyStore);
 
-    const increaseQuantity = (item) => {
-        let updatedCart = cart.map(c => c.id === item.id ? { ...item, quantity: item.quantity + 1 } : item)
+    const removeFromCart = (item) => {
+        let updatedCart = cart.filter(c => c.id !== item.id);
         localStorage.setItem("sm_cart", JSON.stringify(updatedCart));
         setCart(updatedCart);
+    }
 
+    const increaseQuantity = (item) => {
+        let updatedCart = cart.map(c => c.id === item.id ? { ...item, quantity: item.quantity + 1 } : c)
+        localStorage.setItem("sm_cart", JSON.stringify(updatedCart));
+        setCart(updatedCart);
     };
 
     const decreaseQuantity = (item) => {
@@ -20,7 +25,7 @@ const CartItem = ({ item }) => {
             updatedCart = cart.filter(c => c.id !== item.id);
         }
         else {
-            updatedCart = cart.map(c => c.id === item.id ? { ...item, quantity: item.quantity - 1 } : item);
+            updatedCart = cart.map(c => c.id === item.id ? { ...item, quantity: item.quantity - 1 } : c);
         }
 
         localStorage.setItem("sm_cart", JSON.stringify(updatedCart));
@@ -84,7 +89,7 @@ const CartItem = ({ item }) => {
 
             {/* Remove Button */}
             <button
-                // onClick={removeFromCart}
+                onClick={() => removeFromCart(item)}
                 type="button"
                 className="self-end pb-2 text-red-500/70 transition hover:text-red-500"
             >

@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 export const MyStore = createContext();
+import toast from "react-hot-toast";
 
 
 export const MyStoreProvider = ({ children }) => {
@@ -24,11 +25,13 @@ export const MyStoreProvider = ({ children }) => {
             let updatedCart = cart.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item);
             localStorage.setItem("sm_cart", JSON.stringify(updatedCart));
             setCart(updatedCart);
+            toast.success("Quantity updated");
             return;
         }
         let updatedCart = [...cart, { ...product, quantity: 1 }];
         setCart(updatedCart);
         localStorage.setItem("sm_cart", JSON.stringify(updatedCart));
+        toast.success("Added to cart");
     }
 
     useEffect(() => {

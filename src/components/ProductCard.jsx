@@ -1,11 +1,18 @@
 import { ShoppingCart, Star } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { MyStore } from "../context/MyContext";
 const ProductCard = ({ product }) => {
 
     const navigate = useNavigate();
+    const { addToCart, cart } = useContext(MyStore);
+
+    const isInCart = (product) => {
+        return cart.some((c) => c.id === product.id);
+    }
 
     return (
-        <div onClick={()=>{navigate(`/products/${product.id}`)}} className="group overflow-hidden rounded-[24px] border border-[#303030] bg-[#101110] transition hover:border-[#c6ff00]">
+        <div onClick={() => { navigate(`/products/${product.id}`) }} className="group overflow-hidden rounded-[24px] border border-[#303030] bg-[#101110] transition hover:border-[#c6ff00]">
             {/* Product Image Section */}
             <div className="relative flex h-[285px] items-center justify-center bg-[#fafafa] p-8">
 
@@ -64,10 +71,17 @@ const ProductCard = ({ product }) => {
                         ${product.price}
                     </p>
 
-                    <button className="flex items-center gap-2 rounded-xl bg-[#c6ff00] px-5 py-2.5 font-semibold text-black transition hover:bg-[#b5eb00] active:scale-95">
+                    <button onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(product)
+                    }} className="flex items-center gap-2 rounded-xl bg-[#c6ff00] px-5 py-2.5 font-semibold text-black transition hover:bg-[#b5eb00] active:scale-95">
                         <ShoppingCart size={17} />
-                        Add
+                        {isInCart(product) ? "Added to Cart" : "Add"}
                     </button>
+                    
+
+
+
                 </div>
             </div>
         </div>

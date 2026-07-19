@@ -17,11 +17,12 @@ import CategorySection from './../components/CategorySection';
 import Footer from "../components/Footer";
 import Cart from './../components/Cart';
 import { MyStore } from './../context/MyContext';
+import { useNavigate } from "react-router";
 
 const Home = () => {
     const [topRated, setTopRated] = useState([]);
     const [arrivals, setArrivals] = useState([]);
-    const { isCartOpen, setIsCartOpen } = useContext(MyStore);
+    const { isCartOpen, setIsCartOpen, cart } = useContext(MyStore);
     const categories = [
         {
             name: "Electronics",
@@ -50,10 +51,15 @@ const Home = () => {
         setTopRated(response.data.slice(0, 5));
         setArrivals(response.data.slice(5, 10));
     }
-
+   
     useEffect(() => {
         fetchProducts();
     },[])
+
+    const navigate = useNavigate();
+
+    let totalItems = cart.reduce((acc,item) => acc + item.quantity, 0);
+    let totaValue = cart.reduce((acc,item) => acc + item.quantity*item.price, 0).toFixed(2);
 
     return (
         <div className="min-h-screen bg-[#090a09] text-white">
@@ -84,12 +90,12 @@ const Home = () => {
                         </p>
 
                         <div className="flex gap-3">
-                            <button className="flex items-center gap-3 rounded-xl bg-[#c6ff00] px-7 py-3 text-sm font-bold text-black">
+                            <button onClick={()=>{navigate('/products')}} className="flex items-center gap-3 rounded-xl bg-[#c6ff00] px-7 py-3 text-sm font-bold text-black cursor-pointer">
                                 Shop Now
                                 <ArrowRight size={16} />
                             </button>
 
-                            <button className="rounded-xl border border-[#333] px-7 py-3 text-sm text-[#bbb]">
+                            <button onClick={() => { navigate('/products') }} className="rounded-xl border border-[#333] px-7 py-3 text-sm text-[#bbb] cursor-pointer">
                                 View All Products
                             </button>
                         </div>
@@ -117,7 +123,7 @@ const Home = () => {
                 <section className="grid grid-cols-4 gap-4">
                     <StatCard
                         icon={<Package />}
-                        value="0"
+                        value={totalItems}
                         title="Cart Items"
                         subtitle="In your bag"
                         iconStyle="bg-[#1c2900] text-[#c6ff00]"
@@ -125,7 +131,7 @@ const Home = () => {
 
                     <StatCard
                         icon={<TrendingUp />}
-                        value="$0.00"
+                        value={totaValue}
                         title="Cart Value"
                         subtitle="Ready to checkout"
                         iconStyle="bg-[#071525] text-blue-400"
