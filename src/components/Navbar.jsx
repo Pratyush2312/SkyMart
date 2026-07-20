@@ -104,7 +104,7 @@ const Navbar = () => {
                         </div>
 
                         <span className="text-sm text-[#bbb]">
-                            Pratyush
+                            {user.name}
                         </span>
 
                     </div>
