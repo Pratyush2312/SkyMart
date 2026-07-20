@@ -8,15 +8,22 @@ import {
 import { useContext } from "react";
 import { MyStore } from "../context/MyContext";
 import CartItem from "./CartItem";
-
+import toast from "react-hot-toast";
 const Cart = () => {
-    const { setIsCartOpen, cart } = useContext(MyStore);
+    const { setIsCartOpen, cart, setCart } = useContext(MyStore);
 
-    // Temporary fallback to 1 if quantity is not set
-    const total = cart.reduce(
-        (sum, item) => sum + item.price * (item.quantity || 1),
-        0
-    );
+    const total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+
+    const clearCart = () => {
+        localStorage.setItem("sm_cart", JSON.stringify([]));
+        setCart([]);
+    }
+
+    const handleCheckOut = () => {
+        localStorage.setItem("sm_cart", JSON.stringify([]));
+        setCart([]);
+        toast.success("Order Placed!(Demo)")
+    }
 
     return (
         <>
@@ -103,9 +110,9 @@ const Cart = () => {
 
                         {/* ==================== CART ITEMS ==================== */}
 
-                            <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
-                                {cart.map((item) => (
-                                
+                        <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
+                            {cart.map((item) => (
+
                                 <CartItem
                                     key={item.id}
                                     item={item}
@@ -131,6 +138,7 @@ const Cart = () => {
 
                             {/* Checkout */}
                             <button
+                                onClick={handleCheckOut}
                                 type="button"
                                 className="mt-5 flex h-[54px] w-full cursor-pointer items-center justify-center gap-3 rounded-[17px] bg-[#c6ff00] text-base font-bold text-black transition hover:bg-[#b5eb00] active:scale-[0.99]"
                             >
@@ -140,6 +148,7 @@ const Cart = () => {
 
                             {/* Clear Cart */}
                             <button
+                                onClick={clearCart}
                                 type="button"
                                 className="mt-4 w-full cursor-pointer text-center text-xs text-[#666] transition hover:text-red-400"
                             >

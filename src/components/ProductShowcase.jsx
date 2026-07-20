@@ -2,6 +2,7 @@ import { Star, Zap, ShoppingBag, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { MyStore } from './../context/MyContext';
 import { useContext } from "react";
+import Cart from './Cart';
 const ProductShowcase = ({ topRated = [], newArrivals = [] }) => {
 
     
@@ -36,9 +37,10 @@ const ProductShowcase = ({ topRated = [], newArrivals = [] }) => {
 
 const ProductPanel = ({ title, icon, products }) => {
     const navigate = useNavigate();
-    const { addToCart } = useContext(MyStore);
+    const { addToCart, isCartOpen, setIsCartOpen } = useContext(MyStore);
     return (
         <div className="rounded-[28px] bg-[#1c1c1c] p-7 text-black">
+            {isCartOpen && <Cart />}
             {/* Header */}
             <div className="mb-7 flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -78,7 +80,10 @@ const ProductPanel = ({ title, icon, products }) => {
                         </div>
 
                         {/* Add To Cart */}
-                        <button onClick={() => addToCart(product)}
+                        <button onClick={() => {
+                            addToCart(product)
+                            setIsCartOpen(prev=>!prev)
+                        }}
                             className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f4ffda] text-[#b9f000] transition hover:bg-[#eaffb7]">
                             <ShoppingBag size={18} />
                         </button>

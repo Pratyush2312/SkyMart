@@ -3,6 +3,7 @@ import {
     ArrowRight,
     Heart,
     ShoppingCart,
+    Check,
     Star,
     Truck,
     ShieldCheck,
@@ -14,12 +15,11 @@ import { useContext, useEffect, useState } from "react";
 import { MyStore } from './../context/MyContext';
 import axios from "axios";
 import Footer from './../components/Footer';
-import Cart from './../components/Cart';
 import Navbar from './../components/Navbar';
 
 
 const ProductDetails = () => {
-    const { products, isCartOpen, setIsCartOpen, cart, addToCart } = useContext(MyStore);
+    const { products, setIsCartOpen, cart, addToCart } = useContext(MyStore);
     const [product, setProduct] = useState({});
     const { id } = useParams();
     const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id);
@@ -42,7 +42,6 @@ const ProductDetails = () => {
     return (
         <main className="min-h-screen bg-[#090a09] text-white">
             <Navbar/>
-            {isCartOpen && <Cart/>}
             <div className="mx-auto w-full max-w-[1280px] px-6 py-10">
 
                 {/* Breadcrumb */}
@@ -135,7 +134,7 @@ const ProductDetails = () => {
                                 e.stopPropagation();
                                 addToCart(product)
                             }} className="flex h-[58px] flex-1 items-center justify-center gap-3 rounded-2xl bg-[#c6ff00] font-semibold text-black transition hover:bg-[#b5eb00]">
-                                <ShoppingCart size={17} />
+                                {isInCart(product) ? <Check size={17} /> : <ShoppingCart size={17} />}
                                 {isInCart(product) ? "Added to Cart" : "Add"}
                             </button>
 

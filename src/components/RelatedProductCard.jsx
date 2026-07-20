@@ -1,4 +1,4 @@
-import { Star, ShoppingCart } from 'lucide-react'
+import { Star, ShoppingCart, Check } from 'lucide-react'
 import { useContext } from 'react';
 import { MyStore } from '../context/MyContext';
 import Cart from './Cart';
@@ -6,7 +6,9 @@ import Cart from './Cart';
 export const RelatedProductCard = ({ product }) => {
 
     const { cart, addToCart, isCartOpen, setIsCartOpen } = useContext(MyStore);
-
+    const isInCart = (product) => {
+        return cart.some((c) => c.id === product.id);
+    }
     return (
         <div className="group overflow-hidden rounded-[24px] border border-[#303030] bg-[#101110]">
             {isCartOpen && <Cart />}
@@ -66,11 +68,12 @@ export const RelatedProductCard = ({ product }) => {
 
                     <button
                         onClick={() => {
-                            setIsCartOpen(prev => !prev);   
+                            setIsCartOpen(prev => !prev);
+                            addToCart(product);
                         }}
                         className="flex items-center gap-1.5 rounded-xl bg-[#c6ff00] px-3 py-2 text-xs font-semibold text-black">
-                        <ShoppingCart size={14} />
-                        Add
+                        {isInCart(product) ? <Check size={14}/> : <ShoppingCart size={14} />}
+                        {isInCart(product) ? "Added to Cart" : "Add"}
                     </button>
                 </div>
             </div>
