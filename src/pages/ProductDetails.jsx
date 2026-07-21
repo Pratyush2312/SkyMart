@@ -35,7 +35,7 @@ const ProductDetails = () => {
             top: 0,
             behavior: "smooth",
         });
-        setFavourite(false);    
+        setFavourite(false);
         fetchProductDetails(id);
     }, [id])
 
@@ -146,9 +146,9 @@ const ProductDetails = () => {
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    setIsCartOpen(prev=>!prev)
+                                    setIsCartOpen(prev => !prev)
                                     addToCart(product)
-                                }} className={`flex h-[58px] flex-1 items-center justify-center gap-3 rounded-2xl ${isInCart(product) ? 'bg-[#759600]' :'bg-[#c6ff00]'} font-semibold text-black transition hover:bg-[#b5eb00]`}>
+                                }} className={`flex h-[58px] flex-1 items-center justify-center gap-3 rounded-2xl ${isInCart(product) ? 'bg-[#759600]' : 'bg-[#c6ff00]'} font-semibold text-black transition hover:bg-[#b5eb00]`}>
                                 {isInCart(product) ? <Check size={17} /> : <ShoppingCart size={17} />}
                                 {isInCart(product) ? "Added to Cart" : "Add"}
                             </button>
@@ -157,7 +157,7 @@ const ProductDetails = () => {
                                 onClick={() => setFavourite(prev => !prev)}
                                 className={`flex h-[58px] w-[58px] items-center justify-center rounded-2xl border-2 transition
                                 ${favourite
-                                    ? "border-[#692424] bg-[#2F1515] text-[#F87171]"
+                                        ? "border-[#692424] bg-[#2F1515] text-[#F87171]"
                                         : "border-[#333] text-[#777] hover:border-[#5B1C1C] hover:text-[#F87171]"
                                     }`}
                             >
@@ -190,20 +190,28 @@ const ProductDetails = () => {
                         </div>
 
                         {/* Previous / Next */}
-                        <div className="mt-12 grid grid-cols-2 gap-4">
-                            <button
-                                onClick={() => { handlePrev(product.id) }}
-                                className="flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#292929] text-sm transition hover:bg-[#333]">
-                                <ArrowLeft size={16} />
-                                Previous
-                            </button>
+                        <div className="mt-10 flex gap-4">
+                            {Number(id) > 1 && (
+                                <button
+                                    onClick={()=>{handlePrev(product.id)}}
+                                    className={`flex items-center justify-center gap-2 rounded-2xl border border-[#444] bg-[#2A2A2A] py-4 text-lg font-semibold transition hover:bg-[#333]
+                                        ${Number(id) < 20 ? "flex-1" : "w-full"}`}
+                                >
+                                    <ArrowLeft size={18} />
+                                    Previous
+                                </button>
+                            )}
 
-                            <button
-                                onClick={() => { handleNext(product.id) }}
-                                className="flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#c6ff00] text-sm font-medium text-black transition hover:bg-[#b5eb00]">
-                                Next
-                                <ArrowRight size={16} />
-                            </button>
+                            {Number(id) < 20 && (
+                                <button
+                                    onClick={()=>{handleNext(product.id)}}
+                                    className={`flex items-center justify-center gap-2 rounded-2xl bg-[#c6ff00] py-4 text-lg font-semibold text-black transition hover:bg-[#b5eb00]
+                                        ${Number(id) > 1 ? "flex-1" : "w-full"}`}
+                                >
+                                    Next
+                                    <ArrowRight size={18} />
+                                </button>
+                            )}
                         </div>
                     </div>
                 </section>
