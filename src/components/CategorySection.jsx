@@ -32,7 +32,9 @@ const CategorySection = () => {
                     Shop by Category
                 </h2>
 
-                <button className="flex items-center gap-1 text-sm font-medium text-[#c6ff00] transition hover:text-[#aee000] cursor-pointer">
+                <button
+                    onClick={()=>{navigate('/products')}}
+                    className="flex items-center gap-1 text-sm font-medium text-[#c6ff00] transition hover:text-[#aee000] cursor-pointer">
                     View All
                     <ArrowRight size={15} />
                 </button>
