@@ -24,6 +24,7 @@ const Home = () => {
     const [arrivals, setArrivals] = useState([]);
     const { isCartOpen, setIsCartOpen, cart } = useContext(MyStore);
 
+    let user = JSON.parse(localStorage.getItem("sm_session"));
     
 
     const fetchProducts = async () => {
@@ -68,7 +69,7 @@ const Home = () => {
                             Welcome back,
                             <br />
                             <span className="text-[#c6ff00]">
-                                Pratyush!
+                               {user.name.split(" ")[0]}
                             </span>
                         </h2>
 

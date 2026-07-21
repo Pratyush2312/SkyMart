@@ -7,12 +7,25 @@ import Products from '../pages/Products.jsx';
 import About from './../pages/About';
 import ProductDetails from '../pages/ProductDetails.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
+import PublicRoute from './PublicRoute';
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path='/register' element={<Register />} />
-            <Route path='/' element={<Login />} />
+            <Route
+                path='/register'
+                element={
+                    <PublicRoute>
+                        <Register />
+                    </PublicRoute>
+                } />
+            <Route
+                path='/'
+                element={
+                    <PublicRoute>
+                        <Login />
+                    </PublicRoute>
+                } />
             <Route
                 path="/home"
                 element={
