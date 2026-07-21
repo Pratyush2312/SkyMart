@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 
 const Register = () => {
     const navigate = useNavigate();
-
+    
     const {
         register,
         handleSubmit,
@@ -23,6 +23,7 @@ const Register = () => {
         formState: { errors }
     } = useForm();
 
+    const [showPassword, setShowPassword] = useState(false);
     const { users, setUsers } = useContext(MyStore);
 
     const [formData, setFormData] = useState({});
@@ -62,7 +63,6 @@ const Register = () => {
         navigate('/home');
     };
 
-    const [showPassword, setShowPassword] = useState(false);
 
     const password = watch("password");
 
@@ -196,6 +196,7 @@ const Register = () => {
                             />
 
                             <button
+                                onClick={()=>{setShowPassword(prev=>!prev)}}
                                 type="button"
                                 className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666] transition hover:text-white"
                             >

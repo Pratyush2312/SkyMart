@@ -114,57 +114,67 @@ const Login = () => {
                     >
 
                         {/* Email */}
-                        <div className="relative">
-                            <Mail
-                                size={20}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666]"
-                            />
+                        <div>
+                            <div className="relative">
+                                <Mail
+                                    size={20}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666]"
+                                />
 
-                            <input
-                                {...register('email', {
-                                    required: "Name is required",
-                                    pattern: {
-                                        value: /^\S.*$/,
-                                        message: "Blank spaces is not allowed",
-                                    },
-                                })}
-                                type="email"
-                                placeholder="Email address"
-                                className="w-full h-[54px] rounded-2xl border border-[#373737] bg-[#1c1d1c] pl-12 pr-4 text-sm text-white placeholder:text-[#666] outline-none transition focus:border-[#c6ff00] sm:h-[58px] sm:text-base"
-                            />
+                                <input
+                                    {...register("email", {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /^\S.*$/,
+                                            message: "Blank spaces are not allowed",
+                                        },
+                                    })}
+                                    type="email"
+                                    placeholder="Email address"
+                                    className={`w-full h-[54px] rounded-2xl border bg-[#1c1d1c] pl-12 pr-4 text-sm text-white placeholder:text-[#666] outline-none transition sm:h-[58px] sm:text-base ${errors.email && "border-[#373737] focus:border-[#c6ff00]"
+                                        }`}
+                                />
+                            </div>
+
+                            <p className="mt-1 min-h-[20px] text-xs text-red-500 sm:text-sm">
+                                {errors.email?.message}
+                            </p>
                         </div>
 
-
                         {/* Password */}
-                        <div className="relative">
-                            <LockKeyhole
-                                size={20}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666]"
-                            />
+                        <div>
+                            <div className="relative">
+                                <LockKeyhole
+                                    size={20}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666]"
+                                />
 
-                            <input
-                                {...register('password', {
-                                    required: "Password is required",
-                                    minLength: {
-                                        value: 6,
-                                        message: "Password must be atleast 6 characters"
-                                    }
-                                })}
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Password"
-                                className="w-full h-[54px] rounded-2xl border border-[#373737] bg-[#1c1d1c] pl-12 pr-12 text-sm text-white placeholder:text-[#666] outline-none transition focus:border-[#c6ff00] sm:h-[58px] sm:text-base"
-                            />
+                                <input
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 6,
+                                            message: "Password must be at least 6 characters",
+                                        },
+                                    })}
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    className={`w-full h-[54px] rounded-2xl border bg-[#1c1d1c] pl-12 pr-12 text-sm text-white placeholder:text-[#666] outline-none transition sm:h-[58px] sm:text-base ${errors.password && "border-[#373737] focus:border-[#c6ff00]"
+                                        }`}
+                                />
 
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword((prev) => !prev)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666] hover:text-white transition"
-                            >
-                                {showPassword
-                                    ? <EyeOff size={20} />
-                                    : <Eye size={20} />
-                                }
-                            </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666] transition hover:text-white"
+                                >
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
+
+                            <p className="mt-1 min-h-[20px] text-xs text-red-500 sm:text-sm">
+                                {errors.password?.message}
+                            </p>
                         </div>
 
 
