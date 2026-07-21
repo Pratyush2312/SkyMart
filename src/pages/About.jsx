@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import Navbar from "../components/Navbar";
+import Footer from './../components/Footer';
 
 const About = () => {
   const navigate = useNavigate();
@@ -202,6 +203,7 @@ const About = () => {
         </section>
 
       </div>
+      <Footer/>
     </main>
   );
 };

@@ -1,24 +1,25 @@
 import { Search, ChevronDown, X } from "lucide-react";
 import Navbar from '../components/Navbar';
 import { useContext, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import { MyStore } from "../context/MyContext";
 import ProductCard from "../components/ProductCard";
 import Footer from './../components/Footer';
 
 const Products = () => {
-    const { products, setProducts, fetchProducts, isCartOpen } = useContext(MyStore);
-
+    const { products, setProducts, fetchProducts } = useContext(MyStore);
+    const [serachParams] = useSearchParams();
     const [filterOptions, setFilterOptions] = useState({
         search: "",
-        category: "all",
+        category: serachParams.get('category')?.toLowerCase() || "all",
         sortBy: "featured"
     });
 
     let filteredProducts = products.filter(product => {
-        if (filterOptions.category === "all") {
+        if (filterOptions.category.toLowerCase() === "all") {
             return true;
         }
-        return product.category === filterOptions.category;
+        return product.category === filterOptions.category.toLowerCase();
     });
 
     if (filterOptions.sortBy === "low-high") {

@@ -104,7 +104,7 @@ const Navbar = () => {
                         </div>
 
                         <span className="text-sm text-[#bbb]">
-                            {user.name}
+                            {user.name.split(" ")[0]}
                         </span>
 
                     </div>

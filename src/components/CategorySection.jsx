@@ -1,6 +1,29 @@
 import { ArrowRight } from "lucide-react";
-
-const CategorySection = ({ categories = [] }) => {
+import { useNavigate } from "react-router";
+const CategorySection = () => {
+    const navigate = useNavigate();
+    const categories = [
+        {
+            name: "Electronics",
+            icon: "💻",
+            items: 6,
+        },
+        {
+            name: "Men's Clothing",
+            icon: "👔",
+            items: 4,
+        },
+        {
+            name: "Women's Clothing",
+            icon: "👗",
+            items: 6,
+        },
+        {
+            name: "Jewelery",
+            icon: "💎",
+            items: 4,
+        },
+    ];
     return (
         <section className="mt-10">
             {/* Header */}
@@ -9,7 +32,7 @@ const CategorySection = ({ categories = [] }) => {
                     Shop by Category
                 </h2>
 
-                <button className="flex items-center gap-1 text-sm font-medium text-[#c6ff00] transition hover:text-[#aee000]">
+                <button className="flex items-center gap-1 text-sm font-medium text-[#c6ff00] transition hover:text-[#aee000] cursor-pointer">
                     View All
                     <ArrowRight size={15} />
                 </button>
@@ -19,6 +42,7 @@ const CategorySection = ({ categories = [] }) => {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {categories.map((category) => (
                     <div
+                        onClick={() => { navigate(`/products?category=${category.name}`) }}
                         key={category.name}
                         className="flex h-[165px] cursor-pointer flex-col items-center justify-center rounded-[20px] bg-[#fafafa] text-black transition duration-200 hover:-translate-y-1"
                     >

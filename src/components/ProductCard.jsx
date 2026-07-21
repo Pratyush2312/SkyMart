@@ -77,13 +77,10 @@ const ProductCard = ({ product }) => {
                         e.stopPropagation();
                         addToCart(product)
                         setIsCartOpen(prev => !prev)
-                    }} className="flex items-center gap-2 rounded-xl bg-[#c6ff00] px-5 py-2.5 font-semibold text-black transition hover:bg-[#b5eb00] active:scale-95">
+                    }} className="flex items-center gap-2 rounded-xl bg-[#c6ff00] px-3.5 py-2.5 font-semibold text-black transition hover:bg-[#b5eb00] active:scale-95">
                         <ShoppingCart size={17} />
                         {isInCart(product) ? "Added to Cart" : "Add"}
                     </button>
-                    
-
-
 
                 </div>
             </div>

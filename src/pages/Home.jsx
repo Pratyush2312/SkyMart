@@ -24,28 +24,7 @@ const Home = () => {
     const [arrivals, setArrivals] = useState([]);
     const { isCartOpen, setIsCartOpen, cart } = useContext(MyStore);
 
-    const categories = [
-        {
-            name: "Electronics",
-            icon: "💻",
-            items: 6,
-        },
-        {
-            name: "Men's Clothing",
-            icon: "👔",
-            items: 4,
-        },
-        {
-            name: "Women's Clothing",
-            icon: "👗",
-            items: 6,
-        },
-        {
-            name: "Jewelery",
-            icon: "💎",
-            items: 4,
-        },
-    ];
+    
 
     const fetchProducts = async () => {
         let response = await axios("https://fakestoreapi.com/products");
@@ -121,7 +100,7 @@ const Home = () => {
                     <div className="relative z-10 mt-8 grid grid-cols-2 gap-3 lg:absolute lg:right-12 lg:top-1/2 lg:mt-0 lg:flex lg:-translate-y-1/2 lg:flex-col">
                         <div className="w-full rounded-2xl border border-[#3d5100] bg-[#1d2905] px-3 py-5 text-center sm:px-5 sm:py-6 lg:w-40">
                             <p className="text-2xl font-bold text-[#c6ff00] sm:text-3xl">
-                                20+
+                                20
                             </p>
                             <p className="text-xs text-[#777]">
                                 Products Available
@@ -174,7 +153,7 @@ const Home = () => {
                     />
                 </section>
 
-                <CategorySection categories={categories} />
+                <CategorySection />
 
                 <ProductShowcase
                     topRated={topRated}
