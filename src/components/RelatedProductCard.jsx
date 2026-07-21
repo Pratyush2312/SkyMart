@@ -2,6 +2,7 @@ import { Star, ShoppingCart, Check } from 'lucide-react'
 import { useContext } from 'react';
 import { MyStore } from '../context/MyContext';
 import Cart from './Cart';
+import { useNavigate } from 'react-router';
 
 export const RelatedProductCard = ({ product }) => {
 
@@ -9,9 +10,12 @@ export const RelatedProductCard = ({ product }) => {
     const isInCart = (product) => {
         return cart.some((c) => c.id === product.id);
     }
+
+    const navigate = useNavigate();
     return (
-        <div className="group overflow-hidden rounded-[24px] border border-[#303030] bg-[#101110]">
-            {isCartOpen && <Cart />}
+        <div
+            onClick={() => { navigate(`/products/${product.id}`) }}
+            className="group overflow-hidden rounded-[24px] border border-[#303030] bg-[#101110]">
             {/* Image */}
             <div className="relative flex h-[220px] items-center justify-center bg-[#fafafa] p-7">
 
@@ -67,12 +71,13 @@ export const RelatedProductCard = ({ product }) => {
                     </p>
 
                     <button
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.stopPropagation()
                             setIsCartOpen(prev => !prev);
                             addToCart(product);
                         }}
-                        className="flex items-center gap-1.5 rounded-xl bg-[#c6ff00] px-3 py-2 text-xs font-semibold text-black">
-                        {isInCart(product) ? <Check size={14}/> : <ShoppingCart size={14} />}
+                        className={`flex items-center gap-1.5 rounded-xl ${isInCart(product) ? 'bg-[#759600]' : 'bg-[#c6ff00]'} px-3 py-2 text-xs font-semibold text-black`}>
+                        {isInCart(product) ? <Check size={14} /> : <ShoppingCart size={14} />}
                         {isInCart(product) ? "Added to Cart" : "Add"}
                     </button>
                 </div>

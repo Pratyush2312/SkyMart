@@ -82,7 +82,7 @@ const ProductPanel = ({ title, icon, products }) => {
                             addToCart(product)
                             setIsCartOpen(prev=>!prev)
                         }}
-                            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f4ffda] text-[#b9f000] transition hover:bg-[#eaffb7]">
+                            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2a2b2a] text-[#b9f000] transition hover:bg-[#545453]">
                             <ShoppingBag size={18} />
                         </button>
                     </div>

@@ -23,32 +23,46 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const { id } = useParams();
     const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id);
-    
+    const [favourite, setFavourite] = useState(false)
     const fetchProductDetails = async (id) => {
         const response = await axios(`https://fakestoreapi.com/products/${id}`)
         setProduct(response.data);
-        
+
     }
 
     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+        setFavourite(false);    
         fetchProductDetails(id);
-    },[])
+    }, [id])
 
     const isInCart = (product) => {
         return cart.some((c) => c.id === product.id);
     }
     const navigate = useNavigate();
 
+    const handleNext = (id) => {
+        let newId = id + 1;
+        navigate(`/products/${newId}`);
+    }
+    const handlePrev = (id) => {
+        let newId = id - 1;
+        navigate(`/products/${newId}`);
+    }
+
     return (
         <main className="min-h-screen bg-[#090a09] text-white">
-            <Navbar/>
+            <Navbar />
             <div className="mx-auto w-full max-w-[1280px] px-6 py-10">
 
                 {/* Breadcrumb */}
                 <div className="mb-10 flex items-center gap-3 text-sm text-[#666]">
-                    <ArrowLeft size={15} onClick={() => navigate('/products')} className="cursor-pointer hover:text-white"/>
+                    <ArrowLeft size={15} onClick={() => navigate('/products')} className="cursor-pointer hover:text-white" />
 
-                    <span onClick={()=> navigate('/products')} className="cursor-pointer hover:text-white">Products</span>
+                    <span onClick={() => navigate('/products')} className="cursor-pointer hover:text-white">Products</span>
                     <span>/</span>
 
                     <span className="capitalize">
@@ -131,15 +145,26 @@ const ProductDetails = () => {
                         <div className="mt-7 flex gap-3">
                             <button
                                 onClick={(e) => {
-                                e.stopPropagation();
-                                addToCart(product)
-                            }} className="flex h-[58px] flex-1 items-center justify-center gap-3 rounded-2xl bg-[#c6ff00] font-semibold text-black transition hover:bg-[#b5eb00]">
+                                    e.stopPropagation();
+                                    setIsCartOpen(prev=>!prev)
+                                    addToCart(product)
+                                }} className={`flex h-[58px] flex-1 items-center justify-center gap-3 rounded-2xl ${isInCart(product) ? 'bg-[#759600]' :'bg-[#c6ff00]'} font-semibold text-black transition hover:bg-[#b5eb00]`}>
                                 {isInCart(product) ? <Check size={17} /> : <ShoppingCart size={17} />}
                                 {isInCart(product) ? "Added to Cart" : "Add"}
                             </button>
 
-                            <button className="flex h-[58px] w-[58px] items-center justify-center rounded-2xl border border-[#333] text-[#777] transition hover:border-[#c6ff00] hover:text-[#c6ff00]">
-                                <Heart size={21} />
+                            <button
+                                onClick={() => setFavourite(prev => !prev)}
+                                className={`flex h-[58px] w-[58px] items-center justify-center rounded-2xl border-2 transition
+                                ${favourite
+                                    ? "border-[#692424] bg-[#2F1515] text-[#F87171]"
+                                        : "border-[#333] text-[#777] hover:border-[#5B1C1C] hover:text-[#F87171]"
+                                    }`}
+                            >
+                                <Heart
+                                    size={21}
+                                    className={favourite ? "fill-current" : ""}
+                                />
                             </button>
                         </div>
 
@@ -166,12 +191,16 @@ const ProductDetails = () => {
 
                         {/* Previous / Next */}
                         <div className="mt-12 grid grid-cols-2 gap-4">
-                            <button className="flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#292929] text-sm transition hover:bg-[#333]">
+                            <button
+                                onClick={() => { handlePrev(product.id) }}
+                                className="flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#292929] text-sm transition hover:bg-[#333]">
                                 <ArrowLeft size={16} />
                                 Previous
                             </button>
 
-                            <button className="flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#c6ff00] text-sm font-medium text-black transition hover:bg-[#b5eb00]">
+                            <button
+                                onClick={() => { handleNext(product.id) }}
+                                className="flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#c6ff00] text-sm font-medium text-black transition hover:bg-[#b5eb00]">
                                 Next
                                 <ArrowRight size={16} />
                             </button>
@@ -188,6 +217,7 @@ const ProductDetails = () => {
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
                         {relatedProducts.slice(0, 5).map((item) => (
                             <RelatedProductCard
+
                                 key={item.id}
                                 product={item}
                             />
@@ -195,9 +225,7 @@ const ProductDetails = () => {
                     </div>
                 </section>
             </div>
-
-            {/* Footer */}
-            <Footer/>
+            <Footer />
         </main>
     );
 };
@@ -221,6 +249,6 @@ const FeatureBox = ({ icon, title, subtitle }) => {
     );
 };
 
-<RelatedProductCard/>
+<RelatedProductCard />
 
 export default ProductDetails;
