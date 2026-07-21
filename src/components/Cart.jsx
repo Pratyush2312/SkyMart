@@ -16,6 +16,7 @@ const Cart = () => {
 
     const clearCart = () => {
         localStorage.setItem("sm_cart", JSON.stringify([]));
+        toast.success("Cart Cleared!");
         setCart([]);
     }
 

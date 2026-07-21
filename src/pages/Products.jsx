@@ -61,7 +61,7 @@ const Products = () => {
                     </h1>
 
                     <p className="mt-2 text-sm text-[#777] sm:text-base">
-                        20 products found
+                        {filteredProducts.length} products found
                     </p>
                 </section>
 
